@@ -75,6 +75,13 @@ with app.test_client() as client:
         missing_res = client.patch(f"/api/v1/{USER_ID}/todos/{uuid.uuid1()}")
         assert missing_res.status_code == 404
 
+    
+    # @pytest.mark.it("it should get an empty list of todos")
+    # def test_get_empty_todos():
+    #     get_res = client.get(f"/api/v1/{USER_ID}/todos")
+    #     get_res_json = get_res.get_json()
+    #     assert len(get_res_json) == 0
+
     @pytest.mark.it("it should delete all todos")
     def test_delete_all_todos():
         delete_res = client.delete(f"/api/v1/{USER_ID}/todos")
@@ -83,3 +90,5 @@ with app.test_client() as client:
         get_res = client.get(f"/api/v1/{USER_ID}/todos")
         get_res_json = get_res.get_json()
         assert get_res_json == []
+
+        

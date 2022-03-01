@@ -14,9 +14,14 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.route('/')
+@app.route('/index')
+def hello():
+   return "Hello world"
 
-@app.route("/api/v1/<user_id>/todos", methods=["GET"])
+@app.route('/api/v1/<user_id>/todos', methods=["GET"])
 def get_todos(user_id):
+    print('got it')
     res = [dict(x) for x in Todos.filter(user_id=user_id)]
     return jsonify(res)
 
@@ -72,3 +77,6 @@ def update_todo(user_id, item_id):
         return jsonify({"error": "not found"}), 404
     except ValidationError as e:
         return jsonify({"error": str(e)}), 400
+
+if __name__ == '__main__':
+    app.run(debug= True , host= 'localhost' , port=8080) 
